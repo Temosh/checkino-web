@@ -1,36 +1,36 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '../public/vite.svg';
-import './App.css';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { App as AntApp, Layout, theme } from 'antd';
+import { Content } from 'antd/es/layout/layout';
+import { FoursquarePage } from './pages';
+import styles from './App.module.css';
 
-function App() {
-  const [count, setCount] = useState(0);
+const { Header } = Layout;
+
+function Root() {
+  const { token } = theme.useToken();
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button type="button" onClick={() => setCount((c) => c + 1)}>
-          {`count is ${count}`}
-        </button>
-        <p>
-          {'Edit '}
-          <code>src/App.tsx</code>
-          {' and save to test HMR'}
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Layout className={styles.layout}>
+      <Header className={styles.header} style={{ backgroundColor: token.colorBgContainer }} />
+      <Content>
+        <FoursquarePage />
+      </Content>
+    </Layout>
+  );
+}
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Root />,
+  },
+]);
+
+function App() {
+  return (
+    <AntApp>
+      <RouterProvider router={router} />
+    </AntApp>
   );
 }
 
